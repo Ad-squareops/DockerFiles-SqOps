@@ -1,0 +1,12 @@
+FROM ruby:2.6.3
+RUN apt update
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt update && apt install -y tcl
+RUN apt install awscli curl gnupg2 libjemalloc-dev libmagick++-dev libpq-dev libcurl4-openssl-dev wget -y tzdata
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+ENV NODE_VERSION=16.13.1
+RUN /bin/bash -l -c "source /root/.nvm/nvm.sh && \
+                     nvm install $NODE_VERSION && \
+                     nvm alias default $NODE_VERSION && \
+                     nvm use default && \
+                     npm install -g yarn"
