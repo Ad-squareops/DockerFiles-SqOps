@@ -1,0 +1,4 @@
+FROM ubuntu:20.04
+ENV TZ=Australia/Sydney
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt update -y ; apt -y install curl apt-utils ; apt -y install awscli openjdk-11-jdk jq nodejs unzip wget ;
