@@ -1,0 +1,22 @@
+FROM ubuntu:20.04 as zchain
+MAINTAINER 0chain
+LABEL image="0chain_tools"
+ENV DEBIAN_FRONTEND=noninteractive
+RUN cd ~/ && apt update && \
+    apt-get install tzdata && \
+    apt install openssh-server net-tools git nano python3-pip curl -y && \
+    mkdir -p ~/.ssh/ && \
+    chmod -R 700 ~/.ssh/ && \
+    echo "ansible==3.4.0" >> requirements.txt && \
+    echo "ansible-base==2.10.11" >> requirements.txt && \
+    echo "cryptography==2.8" >> requirements.txt && \
+    echo "jinja2==2.11.3" >> requirements.txt && \
+    echo "netaddr==0.7.19" >> requirements.txt && \
+    echo "pbr==5.4.4" >> requirements.txt && \
+    echo "jmespath==0.9.5" >> requirements.txt && \
+    echo "ruamel.yaml==0.16.10" >> requirements.txt && \
+    echo "ruamel.yaml.clib==0.2.4" >> requirements.txt && \
+    echo "MarkupSafe==1.1.1" >> requirements.txt && \
+    pip3 install -r requirements.txt && \
+    curl -LO https://dl.k8s.io/release/v1.21.6/bin/linux/amd64/kubectl && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
